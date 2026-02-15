@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using Abandoned.API;
 using Abandoned.Models;
@@ -10,7 +9,7 @@ namespace Abandoned.Managers
     /// </summary>
     public class GameManager : MonoBehaviour
     {
-        [Header("設定")]
+        [Header("設定")] 
         [SerializeField] private bool useTestDeviceId = true;
         [SerializeField] private string testDeviceId = "unity-test-device-001";
 
@@ -21,6 +20,7 @@ namespace Abandoned.Managers
         public Enemy[] Enemies => enemies;
 
         private static GameManager instance;
+
         public static GameManager Instance
         {
             get
@@ -31,17 +31,20 @@ namespace Abandoned.Managers
                     instance = go.AddComponent<GameManager>();
                     DontDestroyOnLoad(go);
                 }
+
                 return instance;
             }
         }
 
+        //public static GameManager Instance { get; private set; }
         private void Awake()
         {
-            if (instance != null && instance != this)
+            if (Instance != null && Instance != this)
             {
                 Destroy(gameObject);
                 return;
             }
+
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
@@ -57,9 +60,9 @@ namespace Abandoned.Managers
         private void InitializeGame()
         {
             string deviceId = useTestDeviceId ? testDeviceId : SystemInfo.deviceUniqueIdentifier;
-            
+
             Debug.Log($"ゲーム初期化開始: DeviceID = {deviceId}");
-            
+
             // ログイン
             APIClient.Instance.Login(
                 deviceId,
@@ -75,7 +78,7 @@ namespace Abandoned.Managers
         {
             currentUser = response.user;
             Debug.Log($"ログイン成功: UserID = {currentUser.user_id}, Level = {currentUser.level}");
-            
+
             if (response.is_new_user)
             {
                 Debug.Log("新規ユーザー作成完了!");
@@ -118,7 +121,7 @@ namespace Abandoned.Managers
         {
             currentUser = response.user;
             enemies = response.enemies;
-            
+
             Debug.Log($"ゲーム状態読み込み完了: Level = {currentUser.level}, 敵数 = {enemies.Length}");
         }
 
@@ -234,7 +237,7 @@ namespace Abandoned.Managers
         public float GetAttackPower()
         {
             if (currentUser == null) return 0f;
-            
+
             float baseAttack = 10f;
             float attackMultiplier = 1f + (currentUser.attack_up * 0.1f);
             return baseAttack * attackMultiplier;
@@ -246,7 +249,7 @@ namespace Abandoned.Managers
         public float GetAttackSpeed()
         {
             if (currentUser == null) return 1f;
-            
+
             float baseSpeed = 1f;
             float speedMultiplier = 1f + (currentUser.speed_up * 0.1f);
             return baseSpeed * speedMultiplier;
@@ -258,7 +261,7 @@ namespace Abandoned.Managers
         public float GetHPRegain()
         {
             if (currentUser == null) return 0f;
-            
+
             float baseRegain = 1f;
             float regenMultiplier = 1f + (currentUser.hp_regain_up * 0.1f);
             return baseRegain * regenMultiplier;
