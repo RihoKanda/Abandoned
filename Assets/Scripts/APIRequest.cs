@@ -1,18 +1,69 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System;
 
-public class APIRequest : MonoBehaviour
+namespace IdleGame.Models
 {
-    // Start is called before the first frame update
-    void Start()
+    /// <summary>
+    /// ログインリクエスト
+    /// </summary>
+    [Serializable]
+    public class LoginRequest
     {
-        
+        public string device_id;
     }
 
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// 放置開始リクエスト
+    /// </summary>
+    [Serializable]
+    public class IdleStartRequest
     {
-        
+        public int user_id;
+    }
+
+    /// <summary>
+    /// 放置終了リクエスト
+    /// </summary>
+    [Serializable]
+    public class IdleFinishRequest
+    {
+        public int user_id;
+    }
+
+    /// <summary>
+    /// レベルアップリクエスト
+    /// </summary>
+    [Serializable]
+    public class LevelUpRequest
+    {
+        public int user_id;
+    }
+
+    /// <summary>
+    /// 能力強化リクエスト
+    /// </summary>
+    [Serializable]
+    public class UpgradeRequest
+    {
+        public int user_id;
+        public string upgrade_type; // "attack", "speed", "hp_regen"
+    }
+
+    /// <summary>
+    /// 進化リクエスト
+    /// </summary>
+    [Serializable]
+    public class EvolveRequest
+    {
+        public int user_id;
+    }
+
+    /// <summary>
+    /// 能力強化タイプ
+    /// </summary>
+    public enum UpgradeType
+    {
+        Attack,
+        Speed,
+        HPRegain
     }
 }
