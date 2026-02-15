@@ -1,9 +1,9 @@
 using System;
 using UnityEngine;
-using IdleGame.API;
-using IdleGame.Models;
+using Abandoned.API;
+using Abandoned.Models;
 
-namespace IdleGame.Managers
+namespace Abandoned.Managers
 {
     /// <summary>
     /// ゲーム全体を管理するマネージャー
@@ -255,13 +255,13 @@ namespace IdleGame.Managers
         /// <summary>
         /// HP回復量計算
         /// </summary>
-        public float GetHPRegen()
+        public float GetHPRegain()
         {
             if (currentUser == null) return 0f;
             
-            float baseRegen = 1f;
-            float regenMultiplier = 1f + (currentUser.hp_regen_up * 0.1f);
-            return baseRegen * regenMultiplier;
+            float baseRegain = 1f;
+            float regenMultiplier = 1f + (currentUser.hp_regain_up * 0.1f);
+            return baseRegain * regenMultiplier;
         }
     }
 }

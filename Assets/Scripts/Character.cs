@@ -2,8 +2,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-namespace IdleGame.Battle
+namespace Abandoned.Battle
 {
+    /// <summary>
+    /// キャラクター　表示
+    /// </summary>
     public class Character : MonoBehaviour
     {
         [Header("UI参照")] [SerializeField] private TextMeshProUGUI nameText;
@@ -16,7 +19,7 @@ namespace IdleGame.Battle
 
         private string characterName;
         private float currentHp;
-        private float maxHp;
+        private float maxHP;
         private Vector3 originalPosition;
         private Color originalColor;
 
@@ -28,27 +31,35 @@ namespace IdleGame.Battle
                 originalColor = characterImage.color;
             }
         }
-
+        
+        /// <summary>
+        /// キャラクターデータ 設定
+        /// </summary>
         public void SetCharacterData(string name, float hp, float maxHp)
         {
             characterName = name;
             currentHp = hp;
-            maxHp = maxHp;
+            maxHP = maxHp;
             UpdateDisplay();
         }
-
-        public void UpdateHp(float hp)
+        
+        //ＨＰ　更新
+        public void UpdateHP(float hp)
         {
             float previousHP = currentHp;
             currentHp = hp;
             UpdateDisplay();
 
+            //ダメージ受けた時のアニメーション
             if (hp < previousHP)
             {
                 PlayDamageAnimation();
             }
         }
-
+        
+        /// <summary>
+        /// 表示の更新
+        /// </summary>
         private void UpdateDisplay()
         {
             if (nameText != null)
@@ -58,16 +69,19 @@ namespace IdleGame.Battle
 
             if (hpSlider != null)
             {
-                hpSlider.maxValue = maxHp;
+                hpSlider.maxValue = maxHP;
                 hpSlider.value = currentHp;
             }
 
             if (hpText != null)
             {
-                hpText.text = $"{Mathf.CeilToInt(currentHp)} / {Mathf.CeilToInt(maxHp)}";
+                hpText.text = $"{Mathf.CeilToInt(currentHp)} / {Mathf.CeilToInt(maxHP)}";
             }
         }
-
+        
+        /// <summary>
+        /// 攻撃アニメーション
+        /// </summary>
         public void PlayAttackAnimation()
         {
             if (characterImage != null) return;
@@ -80,7 +94,8 @@ namespace IdleGame.Battle
         {
             float elapsed = 0f;
             Vector3 targetPosition = originalPosition + Vector3.right * 30;
-
+            
+            //前に進んでいるよ
             while (elapsed < attackAnimationDuration / 2)
             {
                 elapsed += Time.deltaTime;
@@ -88,7 +103,7 @@ namespace IdleGame.Battle
                 characterImage.transform.localPosition = Vector3.Lerp(originalPosition, targetPosition, t);
                 yield return null;
             }
-            
+            //後ろに下がったよ
             elapsed = 0f;
             while (elapsed < damageAnimationDuration / 2)
             {
@@ -100,7 +115,10 @@ namespace IdleGame.Battle
             
             characterImage.transform.localPosition = originalPosition;
         }
-
+        
+        /// <summary>
+        /// ダメージ食らった時のアニメーション
+        /// </summary>
         public void PlayDamageAnimation()
         {
             if (characterImage != null) return;
@@ -112,7 +130,8 @@ namespace IdleGame.Battle
         {
             float elapsed = 0f;
             Color damageColor = new Color(1f, 0.5f, 0.5f, 1f);
-
+            
+            //あかくなるよ
             while (elapsed < damageAnimationDuration / 2)
             {
                 elapsed += Time.deltaTime;
@@ -120,6 +139,7 @@ namespace IdleGame.Battle
                 characterImage.color = Color.Lerp(damageColor, originalColor, t);
                 yield return null;
             }
+            //元に戻りまする
             elapsed = 0f;
             while (elapsed < damageAnimationDuration / 2)
             {
@@ -129,7 +149,11 @@ namespace IdleGame.Battle
                 yield return null;
             }
         }
-
+        
+        /// <summary>
+        /// キャラクター画像　設定
+        /// </summary>
+        /// <param name="sprite"></param>
         public void SetCharacterSprite(Sprite sprite)
         {
             if (characterImage != null && sprite != null)
