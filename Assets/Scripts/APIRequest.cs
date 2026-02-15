@@ -1,6 +1,6 @@
 using System;
 
-namespace IdleGame.Models
+namespace Abandoned.Models
 {
     /// <summary>
     /// ログインリクエスト
@@ -45,7 +45,7 @@ namespace IdleGame.Models
     public class UpgradeRequest
     {
         public int user_id;
-        public string upgrade_type; // "attack", "speed", "hp_regen"
+        public string upgrade_type; // "attack", "speed", "hp_regain"
     }
 
     /// <summary>

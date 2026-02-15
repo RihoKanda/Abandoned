@@ -3,9 +3,9 @@ using System.Text;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
-using IdleGame.Models;
+using Abandoned.Models;
 
-namespace IdleGame.API
+namespace Abandoned.API
 {
     /// <summary>
     /// APIクライアント

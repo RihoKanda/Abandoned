@@ -1,6 +1,6 @@
 using System;
 
-namespace IdleGame.Models
+namespace Abandoned.Models
 {
     /// <summary>
     /// APIレスポンス基底クラス
@@ -26,7 +26,7 @@ namespace IdleGame.Models
         public long exp;
         public int attack_up;
         public int speed_up;
-        public int hp_regen_up;
+        public int hp_regain_up;
         public int evolution_stage;
         public bool is_idle;
         public string idle_started_at;
