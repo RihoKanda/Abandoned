@@ -118,6 +118,7 @@ namespace Abandoned.Battle
         {
             isBattleActive = false;
             StopAllCoroutines();
+            System.GC.Collect();
             Debug.Log("バトル停止");
         }
         
@@ -244,6 +245,11 @@ namespace Abandoned.Battle
                 var user = GameManager.Instance.CurrentUser;
                 playerCharacter.SetCharacterData($"プレイヤー Lv.{user?.level ?? 1}", playerHP, playerMaxHP);
             }
+        }
+
+        private void OnDestroy()
+        {
+            StopBattle();
         }
     }
 }
